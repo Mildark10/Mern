@@ -1,11 +1,14 @@
 import Veterinario from '../models/Veterinario.js';
 import generarJWT from '../helpers/generarJWT.js';
 import generarID from '../helpers/GenerarId.js';
+import emailRegistro from '../helpers/emailRegistro.js';
+import emailOlvidePassword from '../helpers/emailOlvidePassword.js';
+
 
 const registrar  =  async (req,res)=>{
 
 //   usuarios registrados
-const {email} = req.body;
+const {email,nombre} = req.body;
 
 
 const emailRegistrados = await Veterinario.findOne({email});
@@ -24,21 +27,28 @@ if (emailRegistrados) {
 
         const veterinarioGuardado = await veterinario.save(); 
 
-        console.log(veterinarioGuardado);
+        //enviar Email
+        emailRegistro({
+            email,
+            nombre,
+            token: veterinarioGuardado.token
+        })
+
+        res.json({ msg : "Registrando usuarios"})
 
     } catch (error) {
         console.log(error);
     }
 
     
-    res.json({ msg : "Registrando usuarios"})
+   
     
 }
 
 const perfil  =  (req,res)=>{
     const {veterinario} = req;
     //console.log('estamos en perfil'); 
-   res.json({ perfil : veterinario});
+   res.json({ veterinario});
     
 }
 
@@ -116,9 +126,17 @@ const confirmar  = async  (req,res)=>{
     try {
         existeVeterinario.token = generarID();
         await existeVeterinario.save();
+
+        //enviar Email con instrucciones
+        emailOlvidePassword({
+            email,
+            nombre: existeVeterinario.nombre,
+            token:existeVeterinario.token
+        })
+
         res.json({ msg : "Hemos enviado un gmail con las instrucciones"});
     } catch (error) {
-        
+        console.log(error);
     }
     
  }

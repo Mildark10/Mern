@@ -13,7 +13,7 @@ dotenv.config();
 
 connectDB();
 
-const dominiosPermitidos = ['http://localhost:5174'];
+const dominiosPermitidos = [process.env.SERVER_FRONTEND];
 
 const corsOptions = {
     origin: function(origin, callback){
@@ -34,7 +34,7 @@ app.use(cors(corsOptions))
  app.use("/api/Pacientes", pacientesRoutes) ;
 
 
-const PORT = process.env.PORT || 4002;
+const PORT = process.env.PORT || 4002   ;
 
 
 app.listen(PORT, ()=>{
