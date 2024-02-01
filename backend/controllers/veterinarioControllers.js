@@ -48,7 +48,7 @@ if (emailRegistrados) {
 const perfil  =  (req,res)=>{
     const {veterinario} = req;
     //console.log('estamos en perfil'); 
-   res.json({ veterinario});
+   res.json( veterinario);
     
 }
 
@@ -105,8 +105,12 @@ const confirmar  = async  (req,res)=>{
      
      if (await usuario.comprobarPassword(password)) {
         //autentincar con JWT
-        res.json({token:generarJWT(usuario.id)})
-
+        
+        res.json({
+            _id:usuario._id,
+            nombre:usuario.nombre,
+            email:usuario.email,
+            token:generarJWT(usuario.id)})
         console.log('Pass correcto');
      }else{
         const error = new Error("password incorrecto")
