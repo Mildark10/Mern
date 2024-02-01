@@ -8,13 +8,17 @@ import { clienteAxios } from '../config/axios';
 const AuthContext = createContext();
 const AuthProivader = ({children}) =>{
 
+    const [cargando, setCargando] = useState(true);
     const [auth , setAuth] = useState({});
 
     useEffect(()=>{
         const autenticarUsuario = async()=>{
             const token = localStorage.getItem('token');
 
-            if (!token) return
+            if (!token) {
+                setCargando(false)    
+                return
+            }
 
             //emular a postamn para autenticar el token
             const config = {
@@ -25,25 +29,34 @@ const AuthProivader = ({children}) =>{
             }
 
             try {
-                const data = await clienteAxios('/veterinarios/perfil',config)
-                console.log(data);
+                const { data } = await clienteAxios('/veterinarios/perfil',config)
+                
                 setAuth(data)
             } catch (error) {
-                setAuth({})
                 console.log(error);
+                setAuth({})
+               
             }
 
+            setCargando(false)
         }
 
         autenticarUsuario()
-    },[])
+    },[ ]);
+
+    const cerrarSesion = ()=>{
+        localStorage.removeItem('token');
+        setAuth({});
+    }
 
     return(
         <AuthContext.Provider
         
             value={{
                 auth,
-                setAuth
+                setAuth,
+                cargando,
+                cerrarSesion
             }}
         >
             {children}

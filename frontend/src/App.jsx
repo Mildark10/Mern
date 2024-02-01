@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthLayout } from './layout/AuthLayout';
@@ -11,6 +10,7 @@ import { NuevoPassword } from './paginas/NuevoPassword';
 import { AuthProivader } from './context/AuthProvider';
 import { RutaProtegida } from './layout/RutaProtegida';
 import { AdministrarPacientes } from './paginas/AdministrarPacientes';
+import { PacientesProvaider } from './context/PacientesProvaider';
 
 
 
@@ -21,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProivader>
+        <PacientesProvaider>
         <Routes>
           <Route path='/' element={<AuthLayout />}>
             <Route index element={<Login />} />
@@ -34,10 +35,9 @@ function App() {
            <Route index element={<AdministrarPacientes />} />
            </Route>
 
-        
-
         </Routes>
-
+        
+        </PacientesProvaider>
       </AuthProivader>
     </BrowserRouter>
   )

@@ -12,37 +12,39 @@ export const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [alerta, setAlerta] = useState({});
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const handleSubmit = async (e)=>{
-       
+    const {setAuth} = useAuth()
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+     
         if ([email, password].includes('')) {
-            setAlerta({
-                msg: 'todo los campos son obligatorios',
-                error: true
-            })
-            return;
+          setAlerta({
+            msg: 'todo los campos son obligatorios',
+            error: true,
+          });
+          return;
         }
-
+     
         try {
-            const {data} = await clienteAxios.post('veterinarios/login',{email, password});
-          
-            localStorage.setItem('token',data.token)
-
-
-            navigate('/admin')
-/*             setAlerta({
-                msg: data.response.msg
-            }) */
+          const { data } = await clienteAxios.post('veterinarios/login', { email, password });
+     
+          localStorage.setItem('token', data.token);
+     
+          setAuth( data );
+     
+          navigate('/admin');
+          /*             setAlerta({
+                    msg: data.response.msg
+                }) */
         } catch (error) {
-            setAlerta({
-                msg: error.response.data.msg,
-                error : true
-            })
+          setAlerta({
+            msg: error.response.data.msg,
+            error: true,
+          });
         }
-    }
+      };
 
     const { msg } = alerta
     return (
