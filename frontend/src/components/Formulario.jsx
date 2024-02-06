@@ -7,7 +7,7 @@ export const Formulario = () => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
-  const [fecha, setFecha] = useState('');
+  const [fechas, setFecha] = useState('');
   const [sintomas, setSintomas] = useState('');
   const [alerta, setAlerta] = useState({});
   const [id,setId] = useState(null)
@@ -21,7 +21,7 @@ export const Formulario = () => {
         setNombre(paciente.nombre);
         setPropietario(paciente.propietario);
         setEmail(paciente.email);
-        setFecha(paciente.fecha);
+        setFecha(paciente.fechas);
         setSintomas(paciente.sintomas);
         setId(paciente._id)
 
@@ -32,8 +32,7 @@ export const Formulario = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    if ([nombre, propietario, email, fecha, sintomas].includes('')) {
+    if ([nombre, propietario, email, fechas, sintomas].includes('')) {
       console.log('Hay Al Menos un campo vacio');
       
       setAlerta({
@@ -42,8 +41,8 @@ export const Formulario = () => {
       })
       return;
     }
-
-    guardarPacientes({nombre, propietario, email, fecha, sintomas,id})
+    console.log('feeeeeee',fechas);
+    guardarPacientes({nombre, propietario, email, fechas, sintomas,id})
     setAlerta({
       msg: 'Guardado Correctamente'
     });
@@ -116,15 +115,15 @@ export const Formulario = () => {
 
         <div className="mb-5">
           <label
-            htmlFor="fecha"
+            htmlFor="fechas"
             className="text-gray-700 font-bold">
             Fecha Alta
           </label>
           <input
-            id="fecha"
+            id="fechas"
             type="date"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-            value={fecha}
+            value={fechas}
             onChange={e => setFecha(e.target.value)}
           />
         </div>

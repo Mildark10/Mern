@@ -5,9 +5,11 @@ const Paciente = ({paciente}) => {
     const {setEdicion , eliminarPaciente} = usePacientes() ;
 
     const {email, fechas, nombre, propietario, sintomas , _id} = paciente;
-
+   
+   
     const formatoFecha = (fecha)=>{
         const nuevaFecha = new Date(fecha);
+        
         return new Intl.DateTimeFormat('es-MX', {dateStyle:'long'}).format(nuevaFecha);
     }
 
