@@ -14,7 +14,7 @@ export const Header = () => {
 
         <nav className="flex flex-col lg:flex-row gap-4 mt-5 lg:mt-0 ">
             <Link to="/admin" className="text-white text-sm uppercase font-bold "> Pacientes  </Link>
-            <Link to="/admin" className="text-white text-sm uppercase font-bold"> Veterinarios  </Link>
+            <Link to="/admin/perfil" className="text-white text-sm uppercase font-bold"> Perfil </Link>
             <button
                 type="button"
                 className="text-white text-sm uppercase font-bold"

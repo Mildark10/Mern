@@ -49,6 +49,64 @@ const AuthProivader = ({children}) =>{
         setAuth({});
     }
 
+
+    const actualizarPerfil = async (datos) =>{
+        console.log('datoss' , datos);
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            setCargando(false)    
+            return
+        }
+
+        const config = {
+            headers :{
+                "Content-Type" : "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+         try {
+            const url = `/veterinarios/perfil/${datos._id}` ;
+            const {data} = await clienteAxios.put(url, datos, config) 
+            console.log(data);
+
+         } catch (error) {
+            console.log(error.response);
+         }
+    }
+
+    const guardarPassword = async(datos) =>{
+     
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            setCargando(false)    
+            return
+        }
+
+        const config = {
+            headers :{
+                "Content-Type" : "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+         try {
+            const url = 'veterinarios/actualizar-password';
+            const {data} = await clienteAxios.put(url, datos , config);
+            return {
+                msg: data.msg
+            }
+         } catch (error) {
+
+            return {
+                msg:error.response.data.msg,
+                error: true
+            }
+        }
+    }
+
     return(
         <AuthContext.Provider
         
@@ -56,7 +114,9 @@ const AuthProivader = ({children}) =>{
                 auth,
                 setAuth,
                 cargando,
-                cerrarSesion
+                cerrarSesion,
+                actualizarPerfil,
+                guardarPassword
             }}
         >
             {children}

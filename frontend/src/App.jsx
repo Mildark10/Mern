@@ -11,6 +11,8 @@ import { AuthProivader } from './context/AuthProvider';
 import { RutaProtegida } from './layout/RutaProtegida';
 import { AdministrarPacientes } from './paginas/AdministrarPacientes';
 import { PacientesProvaider } from './context/PacientesProvaider';
+import { EditarPerfil } from './paginas/EditarPerfil';
+import { CambiarPassword } from './paginas/CambiarPassword';
 
 
 
@@ -32,7 +34,9 @@ function App() {
            </Route>
 
            <Route path='/admin' element={<RutaProtegida />} >
-           <Route index element={<AdministrarPacientes />} />
+            <Route index element={<AdministrarPacientes />} />
+            <Route path='perfil' element={<EditarPerfil/>} />
+            <Route path="cambiar-password" element={<CambiarPassword />}  />
            </Route>
 
         </Routes>
